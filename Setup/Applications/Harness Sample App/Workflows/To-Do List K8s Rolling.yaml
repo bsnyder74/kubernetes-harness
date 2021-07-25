@@ -18,7 +18,7 @@ notificationRules:
   - Account Administrator
 phases:
 - type: KUBERNETES
-  computeProviderName: Harness Sample K8s Cloud Provider
+  computeProviderName: bsnyder-dd-k8s-cloud-provider
   daemonSet: false
   infraDefinitionName: K8s
   name: Rolling
@@ -34,13 +34,20 @@ phases:
     stepsInParallel: false
   - type: K8S_PHASE_STEP
     name: Wrap Up
+    steps:
+    - type: K8S_DELETE
+      name: Delete
+      properties:
+        deleteNamespacesForRelease: true
+        resources: '*'
+        stateTimeoutInMinutes: 10
     stepsInParallel: false
   provisionNodes: false
   serviceName: To-Do List K8s
   statefulSet: false
 rollbackPhases:
 - type: KUBERNETES
-  computeProviderName: Harness Sample K8s Cloud Provider
+  computeProviderName: bsnyder-dd-k8s-cloud-provider
   daemonSet: false
   infraDefinitionName: K8s
   name: Rollback Rolling
